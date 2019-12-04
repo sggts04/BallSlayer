@@ -37,15 +37,16 @@ class Player {
     }
 
     update() {
-        if(this.vx || this.vy) {
+        if(this.vx || this.vy) {    // if moving, add old coords to trajectory
             this.trajectory.push({x: this.x, y: this.y});
-            if(this.trajectory.length === this.maxTrajectoryLength) {
+            if(this.trajectory.length === this.maxTrajectoryLength) { // if trajectory length is greater than max, shrink the trajectory from beginning
                 this.trajectory.shift();
             }
         }
-        else {
+        else { // else shrink trajectory
             this.trajectory.shift();
         }
+        
         if((this.x + this.vx + this.r > canvas.width) || (this.x + this.vx < this.r)) {
             this.vx = -this.vx/5;
         }

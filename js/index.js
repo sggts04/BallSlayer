@@ -2,6 +2,11 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 var player = new Player(20);
+var blobs = [];
+for(var i=0; i<5; i++) {
+    blobs.push(new Blob(20));
+}
+
 var mouseX;
 var mouseY;
 var aiming = false;
@@ -44,6 +49,10 @@ function draw() {
     }
     player.update();
     
+    for(var i=0; i<blobs.length; i++) {
+        blobs[i].draw();
+    }
+
     requestAnimationFrame(draw);
 }
 
