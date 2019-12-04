@@ -1,5 +1,7 @@
 class Player {
     constructor(r) {
+      this.color = "red";
+      this.aimcolor = "white";
       this.r = r;
       this.x = 3*r + Math.floor(Math.random() * (canvas.width-6*r));
       this.y = 3*r + Math.floor(Math.random() * (canvas.height-6*r));
@@ -7,12 +9,16 @@ class Player {
       this.vy = 0;
       this.ax = 0;
       this.ay = 0.1;  // positive y acceleration brings you down in y direction
+
+      // Sounds
+      this.jumpSound = document.createElement("audio");
+      this.jumpSoundList = ["sounds/jumps/jump.wav", "sounds/jumps/jump2.wav", "sounds/jumps/jump3.wav", "sounds/jumps/jump4.wav"];
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }
@@ -33,7 +39,7 @@ class Player {
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(mouseX, mouseY);
-        ctx.strokeStyle = 'white';
+        ctx.strokeStyle = this.aimcolor;
         ctx.lineWidth = 4;
         ctx.stroke();
         ctx.closePath();
@@ -41,7 +47,7 @@ class Player {
         var shrinkFactor = 1 - (Math.sqrt( (mouseX-this.x)*(mouseX-this.x)  +  (mouseY-this.y)*(mouseY-this.y) )/(canvas.width + canvas.height));
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r * shrinkFactor, 0, Math.PI*2);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }
@@ -52,5 +58,7 @@ class Player {
         // give velocity according to length of aim length
         this.vx = (mouseX - this.x) * 20 / canvas.width;
         this.vy = (mouseY - this.y) * 20 / canvas.height;
+        this.jumpSound.src = this.jumpSoundList[Math.floor(Math.random() * this.jumpSoundList.length)];
+        this.jumpSound.play();
     }
   }
