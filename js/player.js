@@ -7,7 +7,6 @@ class Player {
       this.y = 3*r + Math.floor(Math.random() * (canvas.height-6*r));
       this.vx = 0;
       this.vy = 0;
-      this.ax = 0;
       this.ay = 0.1;  // positive y acceleration brings you down in y direction
 
       // Sounds
@@ -24,9 +23,14 @@ class Player {
     }
 
     update() {
+        if((this.x + this.vx + this.r > canvas.width) || (this.x + this.vx < this.r)) {
+            this.vx = -this.vx/5;
+        }
+        if((this.y + this.vy + this.r > canvas.height) || (this.y + this.vy < this.r)) {
+            this.vy = -this.vy/5;
+        }
         this.x += this.vx;
         this.y += this.vy;
-        this.vx += this.ax;
         this.vy += this.ay;
     }
 
@@ -59,6 +63,7 @@ class Player {
         this.vx = (mouseX - this.x) * 20 / canvas.width;
         this.vy = (mouseY - this.y) * 20 / canvas.height;
         this.jumpSound.src = this.jumpSoundList[Math.floor(Math.random() * this.jumpSoundList.length)];
+        this.jumpSound.volume = 0.2;
         this.jumpSound.play();
     }
   }
