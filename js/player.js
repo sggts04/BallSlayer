@@ -25,8 +25,10 @@ class Player {
     }
 
     aim(mouseX, mouseY) {
+        // slow down when aiming
         this.ay = 0;
         this.vy = 0.5;
+        // draw aiming line
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(mouseX, mouseY);
@@ -34,7 +36,7 @@ class Player {
         ctx.lineWidth = 4;
         ctx.stroke();
         ctx.closePath();
-
+        // shrink ball according to aim length
         var shrinkFactor = 1 - (Math.sqrt( (mouseX-this.x)*(mouseX-this.x)  +  (mouseY-this.y)*(mouseY-this.y) )/(canvas.width + canvas.height));
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r * shrinkFactor, 0, Math.PI*2);
@@ -44,7 +46,9 @@ class Player {
     }
 
     shoot(mouseX, mouseY) {
+        // back to normal acceleration
         this.ay = 0.1;
+        // give velocity according to length of aim length
         this.vx = (mouseX - this.x) * 20 / canvas.width;
         this.vy = (mouseY - this.y) * 20 / canvas.height;
     }
