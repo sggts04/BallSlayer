@@ -27,7 +27,8 @@ class Player {
     aim(mouseX, mouseY) {
         // slow down when aiming
         this.ay = 0;
-        this.vy = 0.5;
+        this.vx = (Math.abs(this.vx) < 1)? this.vx: (this.vx/Math.abs(this.vx));    // velocity should be less than 1 or 1, in same direction as original velocity
+        this.vy = (Math.abs(this.vy) < 1)? this.vy: (this.vy/Math.abs(this.vy));
         // draw aiming line
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
