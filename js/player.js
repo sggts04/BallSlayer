@@ -1,7 +1,8 @@
 class Player {
     constructor(r) {
       this.color = "red";
-      this.aimcolor = "white";
+      this.trajectoryColor = "gray";
+      this.aimColor = "white";
       this.r = r;
       this.x = 3*r + Math.floor(Math.random() * (canvas.width-6*r));
       this.y = 3*r + Math.floor(Math.random() * (canvas.height-6*r));
@@ -9,20 +10,42 @@ class Player {
       this.vy = 0;
       this.ay = 0.1;  // positive y acceleration brings you down in y direction
 
+      this.maxTrajectoryLength = 20;
+      this.trajectory = [];
+
       // Sounds
       this.jumpSound = document.createElement("audio");
       this.jumpSoundList = ["sounds/jumps/jump.wav", "sounds/jumps/jump2.wav", "sounds/jumps/jump3.wav", "sounds/jumps/jump4.wav"];
     }
 
     draw() {
+        // draw trajectory
+        for(var i=0; i<this.trajectory.length; i++) {
+            ctx.beginPath();
+            ctx.arc(this.trajectory[i].x, this.trajectory[i].y, this.r/(3 + (this.trajectory.length-i-1)), 0, Math.PI*2);
+            ctx.fillStyle = this.trajectoryColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+    
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
+
     }
 
     update() {
+        if(this.vx || this.vy) {
+            this.trajectory.push({x: this.x, y: this.y});
+            if(this.trajectory.length === this.maxTrajectoryLength) {
+                this.trajectory.shift();
+            }
+        }
+        else {
+            this.trajectory.shift();
+        }
         if((this.x + this.vx + this.r > canvas.width) || (this.x + this.vx < this.r)) {
             this.vx = -this.vx/5;
         }
@@ -43,10 +66,20 @@ class Player {
         ctx.beginPath();
         ctx.moveTo(this.x, this.y);
         ctx.lineTo(mouseX, mouseY);
-        ctx.strokeStyle = this.aimcolor;
+        ctx.strokeStyle = this.aimColor;
         ctx.lineWidth = 4;
         ctx.stroke();
         ctx.closePath();
+    
+        // draw trajectory
+        for(var i=0; i<this.trajectory.length; i++) {
+            ctx.beginPath();
+            ctx.arc(this.trajectory[i].x, this.trajectory[i].y, this.r/(3 + (this.trajectory.length-i-1)), 0, Math.PI*2);
+            ctx.fillStyle = this.trajectoryColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+
         // shrink ball according to aim length
         var shrinkFactor = 1 - (Math.sqrt( (mouseX-this.x)*(mouseX-this.x)  +  (mouseY-this.y)*(mouseY-this.y) )/(canvas.width + canvas.height));
         ctx.beginPath();
