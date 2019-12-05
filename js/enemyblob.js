@@ -18,5 +18,15 @@ class EnemyBlob {
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r/2, 0, Math.PI*2);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r/3, 0, Math.PI*2);
+        ctx.fillStyle = "maroon";
+        ctx.fill();
+        ctx.closePath();
     }
 }

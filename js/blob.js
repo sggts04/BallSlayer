@@ -2,7 +2,7 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 class Blob {
     constructor(r) {
-        this.color = "orange";
+        this.color = "green";
         this.r = r;
         this.x = 3*r + Math.floor(Math.random() * (canvas.width-6*r));
         this.y = 3*r + Math.floor(Math.random() * (canvas.height-6*r));

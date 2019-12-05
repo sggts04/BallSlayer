@@ -60,6 +60,7 @@ function shakeEnd() {   // end camera shake after some time
 }
 
 var music = new Audio('sounds/music.wav'); 
+music.volume = 0.3;
 music.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
