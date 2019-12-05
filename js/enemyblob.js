@@ -3,6 +3,7 @@ var ctx = canvas.getContext("2d");
 class EnemyBlob {
     constructor(r) {
         this.color = "pink";
+        this.colors = ["red", "maroon"];
         this.r = r;
         this.x = 3*r + Math.floor(Math.random() * (canvas.width-6*r));
         this.y = 3*r + Math.floor(Math.random() * (canvas.height-6*r));
@@ -25,7 +26,7 @@ class EnemyBlob {
         ctx.closePath();
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r/3, 0, Math.PI*2);
-        ctx.fillStyle = "maroon";
+        ctx.fillStyle = this.colors[Math.floor(Math.random() * this.colors.length)];
         ctx.fill();
         ctx.closePath();
     }
