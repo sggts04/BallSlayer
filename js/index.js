@@ -7,6 +7,10 @@ var blobs = [];
 for(var i=0; i<5; i++) {
     blobs.push(new Blob(20));
 }
+var enemyblobs = [];
+for(var i=0; i<2; i++) {
+    enemyblobs.push(new EnemyBlob(20));
+}
 
 var mouseX;
 var mouseY;
@@ -55,6 +59,13 @@ function shakeEnd() {   // end camera shake after some time
     ctx.restore();
 }
 
+var music = new Audio('sounds/music.wav'); 
+music.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+music.play();
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -84,6 +95,14 @@ function draw() {
             shaking = true;
             setInterval(shake, 50); // new camera position after every 50ms
             setTimeout(shakeEnd, 200);  // stop shaking after 200ms
+        }
+    }
+
+    for(var i=0; i<enemyblobs.length; i++) {
+        enemyblobs[i].draw();
+        if(player.checkExplode(enemyblobs[i].x, enemyblobs[i].y, enemyblobs[i].r)) {
+            alert("GAME OVER\nYour Score: "+score);
+            document.location.reload();
         }
     }
 
