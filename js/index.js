@@ -11,6 +11,7 @@ var mouseX;
 var mouseY;
 var aiming = false;
 var shooting = false;
+var shaking = false;
 var score = 0;
 
 function mouseDownHandler(e) {
@@ -37,6 +38,22 @@ document.addEventListener("mousedown", mouseDownHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("mouseup", mouseUpHandler, false);
 
+function shake() {  // camera shake during explosion, done by translating the context
+    if(shaking) {
+        var dir = [1, -1];
+        var dx = Math.random()*20;
+        var dy = Math.random()*20;
+        var dir1 = dir[Math.floor(Math.random()*2)];
+        var dir2 = dir[Math.floor(Math.random()*2)];
+        ctx.translate(dir1*dx, dir2*dy);
+    }
+}
+
+function shakeEnd() {   // end camera shake after some time
+    shaking = false;
+    ctx.restore();
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -62,6 +79,10 @@ function draw() {
         if(player.checkExplode(blobs[i].x, blobs[i].y, blobs[i].r)) {
             blobs[i].explode();
             score+=100;
+            ctx.save();
+            shaking = true;
+            setInterval(shake, 50); // new camera position after every 50ms
+            setTimeout(shakeEnd, 200);  // stop shaking after 200ms
         }
     }
 

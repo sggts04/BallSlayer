@@ -31,7 +31,6 @@ class Blob {
 
     flare() {
         ctx.beginPath();
-        console.log(1);
         ctx.arc(this.x + Math.floor(Math.random()*50) , this.y + Math.floor(Math.random()*50), this.r/2 - Math.floor(Math.random()*5), 0, Math.PI*2);
         ctx.arc(this.x - Math.floor(Math.random()*50) , this.y - Math.floor(Math.random()*50), this.r/2 - Math.floor(Math.random()*5), 0, Math.PI*2);
         ctx.arc(this.x - Math.floor(Math.random()*50) , this.y + Math.floor(Math.random()*50), this.r/2 - Math.floor(Math.random()*5), 0, Math.PI*2);
