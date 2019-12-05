@@ -92,6 +92,7 @@ function draw() {
         if(player.checkExplode(blobs[i].x, blobs[i].y, blobs[i].r)) {
             blobs[i].explode();
             score+=100;
+            enemyblobs.push(new EnemyBlob(20)); // new enemy each time player eats a blob
             ctx.save();
             shaking = true;
             setInterval(shake, 50); // new camera position after every 50ms
