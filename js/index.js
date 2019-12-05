@@ -11,6 +11,7 @@ var mouseX;
 var mouseY;
 var aiming = false;
 var shooting = false;
+var score = 0;
 
 function mouseDownHandler(e) {
     mouseX = e.clientX - canvas.offsetLeft;
@@ -38,6 +39,13 @@ document.addEventListener("mouseup", mouseUpHandler, false);
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = "50px Verdana";
+    ctx.strokeStyle = "red";
+    ctx.textAlign = "center";
+    ctx.lineWidth = 2;
+    ctx.strokeText("Score: "+score, canvas.width/2, canvas.height/10);
+
     if(aiming) {
         player.aim(mouseX, mouseY);
     } else if(shooting) {
@@ -53,6 +61,7 @@ function draw() {
         blobs[i].draw();
         if(player.checkExplode(blobs[i].x, blobs[i].y, blobs[i].r)) {
             blobs[i].explode();
+            score+=100;
         }
     }
 
