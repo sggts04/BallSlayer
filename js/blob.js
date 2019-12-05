@@ -1,3 +1,5 @@
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 class Blob {
     constructor(r) {
         this.color = "orange";

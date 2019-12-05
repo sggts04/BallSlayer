@@ -1,3 +1,5 @@
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 class Player {
     constructor(r) {
       this.color = "red";
@@ -102,7 +104,7 @@ class Player {
     }
 
     checkExplode(blobX, blobY, blobR) {
-        if( Math.sqrt( (blobX-this.x)*(blobX-this.x)  +  (blobY-this.y)*(blobY-this.y) ) <= (this.r + blobR) ) {
+        if( Math.sqrt( (blobX-this.x)*(blobX-this.x)  +  (blobY-this.y)*(blobY-this.y) ) <= (this.r + blobR) ) {  // if distance between centers is less than sum of radius
             this.kill();
             return true;
         }
