@@ -51,6 +51,9 @@ function draw() {
     
     for(var i=0; i<blobs.length; i++) {
         blobs[i].draw();
+        if(player.checkExplode(blobs[i].x, blobs[i].y, blobs[i].r)) {
+            blobs[i].explode();
+        }
     }
 
     requestAnimationFrame(draw);

@@ -46,7 +46,7 @@ class Player {
         else { // else shrink trajectory
             this.trajectory.shift();
         }
-        
+
         if((this.x + this.vx + this.r > canvas.width) || (this.x + this.vx < this.r)) {
             this.vx = -this.vx/5;
         }
@@ -99,5 +99,18 @@ class Player {
         this.jumpSound.src = this.jumpSoundList[Math.floor(Math.random() * this.jumpSoundList.length)];
         this.jumpSound.volume = 0.2;
         this.jumpSound.play();
+    }
+
+    checkExplode(blobX, blobY, blobR) {
+        if( Math.sqrt( (blobX-this.x)*(blobX-this.x)  +  (blobY-this.y)*(blobY-this.y) ) <= (this.r + blobR) ) {
+            this.kill();
+            return true;
+        }
+        return false;
+    }
+
+    kill() {
+        this.vx = -this.vx;
+        this.vy = -this.vy;
     }
   }
